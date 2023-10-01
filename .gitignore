@@ -1,5 +1,12 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Avoid accidental Sketch file upload 
+*.sketch
+
+# Avoid accidental XD or Figma upload if you convert the design file
+*.xd
+*.fig
+
 # dependencies
 /node_modules
 /.pnp

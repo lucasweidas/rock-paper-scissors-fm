@@ -2,13 +2,13 @@ import Image from 'next/image';
 
 export default function Home() {
   return (
-    <main>
+    <main className="px-7 pt-8 pb-14">
       <h1 className="sr-only">
         Choose one of the options bellow to start playing.
       </h1>
       <div>
-        <div>
-          <div>
+        <div className="flex gap-8 justify-between items-center py-3 pl-5 pr-3 rounded-lg shadow-[0_0_2px_2px_hsl(217,16%,45%),inset_0_0_2px_2px_hsl(217,16%,45%)]">
+          <div className="w-[82px] h-[47px]">
             <Image
               src="/images/logo.svg"
               alt="Rock, Paper, Scissors"
@@ -16,9 +16,13 @@ export default function Home() {
               height={99}
             />
           </div>
-          <div>
-            <h2>Score</h2>
-            <span>0</span>
+          <div className="w-20 h-[4.5rem] p-3 flex items-center justify-center flex-col bg-white rounded-lg">
+            <h2 className="text-blue-500 font-semibold uppercase text-xs tracking-widest">
+              Score
+            </h2>
+            <span className="text-gray-700 text-[2rem] !leading-none font-bold uppercase">
+              12
+            </span>
           </div>
         </div>
 

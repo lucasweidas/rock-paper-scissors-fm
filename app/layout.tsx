@@ -19,7 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${barlowSemiCondensed.className}`}>{children}</body>
+      <body
+        className={`${barlowSemiCondensed.className} bg-radial-1 bg-no-repeat w-full min-h-screen`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

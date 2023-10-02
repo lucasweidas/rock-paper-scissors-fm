@@ -4,10 +4,10 @@ export default function Home() {
   return (
     <main className="px-7 pt-8 pb-14">
       <h1 className="sr-only">
-        Choose one of the options bellow to start playing.
+        Choose one of the options below to start playing.
       </h1>
       <div>
-        <div className="flex gap-8 justify-between items-center py-3 pl-5 pr-3 rounded-lg shadow-[0_0_2px_2px_hsl(217,16%,45%),inset_0_0_2px_2px_hsl(217,16%,45%)]">
+        <div className="flex gap-8 justify-between items-center py-3 pl-5 pr-3 rounded-lg shadow-[0_0_2px_2px_hsl(217,16%,45%),inset_0_0_2px_2px_hsl(217,16%,45%)] max-w-md mx-auto">
           <div className="w-[82px] h-[47px]">
             <Image
               src="/images/logo.svg"
@@ -26,34 +26,54 @@ export default function Home() {
           </div>
         </div>
 
-        <div>
-          <button aria-label="Paper">
-            <Image
-              src="/images/icon-paper.svg"
-              alt="Paper"
-              width={49}
-              height={59}
-            />
+        <div className="flex flex-wrap gap-y-4 gap-x-[3.25rem] justify-center bg-triangle bg-no-repeat bg-[size:230px_160px] bg-center max-w-xs mx-auto mt-24">
+          <button
+            className="w-32 h-32 rounded-full bg-linear-2 shadow-option-b p-4"
+            aria-label="Paper"
+          >
+            <span className="bg-white w-full h-full rounded-full flex items-center justify-center shadow-option-t">
+              <Image
+                src="/images/icon-paper.svg"
+                alt="Paper"
+                width={49}
+                height={59}
+                className="w-[43px] h-[53px]"
+              />
+            </span>
           </button>
-          <button aria-label="Rock">
-            <Image
-              src="/images/icon-rock.svg"
-              alt="Rock"
-              width={48}
-              height={48}
-            />
+          <button
+            className="w-32 h-32 rounded-full bg-linear-1 shadow-option-b p-4"
+            aria-label="Scissors"
+          >
+            <span className="bg-white w-full h-full rounded-full flex items-center justify-center shadow-option-t">
+              <Image
+                src="/images/icon-scissors.svg"
+                alt="Scissors"
+                width={51}
+                height={58}
+                className="w-[45px] h-[52px]"
+              />
+            </span>
           </button>
-          <button aria-label="Scissors">
-            <Image
-              src="/images/icon-scissors.svg"
-              alt="Scissors"
-              width={51}
-              height={58}
-            />
+          <button
+            className="w-32 h-32 rounded-full bg-linear-3 shadow-option-b p-4"
+            aria-label="Rock"
+          >
+            <span className="bg-white w-full h-full rounded-full flex items-center justify-center shadow-option-t">
+              <Image
+                src="/images/icon-rock.svg"
+                alt="Rock"
+                width={48}
+                height={48}
+                className="w-[42px] h-[42px]"
+              />
+            </span>
           </button>
         </div>
 
-        <button>Rules</button>
+        <button className="uppercase font-semibold border-[2px] border-white rounded-lg h-11 w-32 text-white tracking-widest mx-auto flex justify-center items-center mt-36">
+          Rules
+        </button>
       </div>
     </main>
   );

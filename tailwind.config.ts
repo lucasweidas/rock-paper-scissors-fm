@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import { fontFamily } from 'tailwindcss/defaultTheme';
 
 const config: Config = {
   content: [
@@ -8,6 +9,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        barlowSemiCondensed: [
+          'var(--font-barlow-semi-condensed)',
+          ...fontFamily.sans,
+        ],
+      },
       colors: {
         gray: {
           500: 'hsl(217, 16%, 45%)',

@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 const barlowSemiCondensed = Barlow_Semi_Condensed({
   subsets: ['latin'],
   weight: ['600', '700'],
+  variable: '--font-barlow-semi-condensed',
 });
 
 export default function RootLayout({
@@ -20,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${barlowSemiCondensed.className} bg-radial-1 bg-no-repeat w-full min-h-screen`}
+        className={`${barlowSemiCondensed.variable} font-barlowSemiCondensed bg-radial-1 bg-no-repeat w-full min-h-screen`}
       >
         {children}
       </body>

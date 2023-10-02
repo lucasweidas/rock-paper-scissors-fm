@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import RulesWrapper from '@/components/RulesWrapper';
 
 export default function Home() {
   return (
@@ -70,10 +71,7 @@ export default function Home() {
             </span>
           </button>
         </div>
-
-        <button className="uppercase font-semibold border-[2px] border-white rounded-lg h-11 w-32 text-white tracking-widest mx-auto flex justify-center items-center mt-36">
-          Rules
-        </button>
+        <RulesWrapper />
       </div>
     </main>
   );

@@ -1,5 +1,9 @@
 import Image from 'next/image';
 import RulesWrapper from '@/components/RulesWrapper';
+import logo from '@/public/images/logo.svg';
+import paperIcon from '@/public/images/icon-paper.svg';
+import scissorsIcon from '@/public/images/icon-scissors.svg';
+import rockIcon from '@/public/images/icon-rock.svg';
 
 export default function Home() {
   return (
@@ -9,12 +13,12 @@ export default function Home() {
       </h1>
       <div>
         <div className="flex gap-8 justify-between items-center py-3 pl-5 pr-3 rounded-lg shadow-[0_0_2px_2px_hsl(217,16%,45%),inset_0_0_2px_2px_hsl(217,16%,45%)] max-w-md mx-auto">
-          <div className="w-[82px] h-[47px]">
+          <div className="w-[82px] h-[51px] relative">
             <Image
-              src="/images/logo.svg"
+              src={logo}
               alt="Rock, Paper, Scissors"
-              width={162}
-              height={99}
+              fill
+              className="object-cover"
             />
           </div>
           <div className="w-20 h-[4.5rem] p-3 flex items-center justify-center flex-col bg-white rounded-lg">
@@ -34,10 +38,8 @@ export default function Home() {
           >
             <span className="bg-white w-full h-full rounded-full flex items-center justify-center shadow-option-t">
               <Image
-                src="/images/icon-paper.svg"
+                src={paperIcon}
                 alt="Paper"
-                width={49}
-                height={59}
                 className="w-[43px] h-[53px]"
               />
             </span>
@@ -48,10 +50,8 @@ export default function Home() {
           >
             <span className="bg-white w-full h-full rounded-full flex items-center justify-center shadow-option-t">
               <Image
-                src="/images/icon-scissors.svg"
+                src={scissorsIcon}
                 alt="Scissors"
-                width={51}
-                height={58}
                 className="w-[45px] h-[52px]"
               />
             </span>
@@ -61,13 +61,7 @@ export default function Home() {
             aria-label="Rock"
           >
             <span className="bg-white w-full h-full rounded-full flex items-center justify-center shadow-option-t">
-              <Image
-                src="/images/icon-rock.svg"
-                alt="Rock"
-                width={48}
-                height={48}
-                className="w-[42px] h-[42px]"
-              />
+              <Image src={rockIcon} alt="Rock" className="w-[42px] h-[42px]" />
             </span>
           </button>
         </div>

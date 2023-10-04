@@ -9,13 +9,34 @@ import rockIcon from '@/public/images/icon-rock.svg';
 import { useState } from 'react';
 
 type Picks = 'paper' | 'scissors' | 'rock';
+type Result = 'win' | 'lose' | 'draw';
 
 export default function Home() {
   const [score, setScore] = useState(0);
-  const [playerPick, setPlayerPick] = useState<Picks>();
+  const [playerPick, setPlayerPick] = useState<Picks | null>(null);
+  const [housePick, setHousePick] = useState<Picks | null>(null);
+  const [result, setResult] = useState<Result | null>(null);
 
   function handlePlayerPick(pick: Picks) {
+    const housePick = getRandomPick();
+    const result = getResult(pick, housePick);
+
     setPlayerPick(pick);
+    setHousePick(housePick);
+    setResult(result);
+    handleScoreChange(result);
+  }
+
+  function handleScoreChange(result: Result) {
+    if (result === 'win') {
+      setScore(score + 1);
+    } else if (result === 'lose' && score > 0) {
+      setScore(score - 1);
+    }
+  }
+
+  function handlePlayAgain() {
+    setPlayerPick(null);
   }
 
   return (
@@ -44,7 +65,12 @@ export default function Home() {
         </div>
         <div className="max-w-xs mx-auto mt-24 w-full">
           {playerPick ? (
-            <Playing playerPick={playerPick} />
+            <Playing
+              playerPick={playerPick}
+              housePick={housePick!}
+              result={result!}
+              onPlayAgain={handlePlayAgain}
+            />
           ) : (
             <Picking onPick={handlePlayerPick} />
           )}
@@ -66,39 +92,50 @@ function Picking({ onPick }: { onPick: (pick: Picks) => void }) {
   );
 }
 
-function Playing({ playerPick }: { playerPick: Picks }) {
-  const housePick = getRandomPick();
-  const winner = getWinner(playerPick, housePick);
-
+function Playing({
+  playerPick,
+  housePick,
+  result,
+  onPlayAgain,
+}: {
+  playerPick: Picks;
+  housePick: Picks;
+  result: Result;
+  onPlayAgain: () => void;
+}) {
   let message = 'Draw';
-  if (winner === 'player') {
+
+  if (result === 'win') {
     message = 'You win';
-  } else if (winner === 'house') {
+  } else if (result === 'lose') {
     message = 'You lose';
   }
 
   return (
     <>
       <div className="flex justify-between items-center">
-        <div className="flex flex-col items-center justify-center gap-6">
+        <div className="flex flex-col items-center relative">
           <OptionButton name={playerPick} disabled />
-          <span className="uppercase text-white font-semibold tracking-widest text-sm">
+          <span className="uppercase text-white font-semibold tracking-widest text-sm absolute -bottom-11">
             You picked
           </span>
         </div>
-        <div className="flex flex-col items-center justify-center gap-6">
+        <div className="flex flex-col items-center relative">
           {/* <div className="w-28 h-28 rounded-full bg-[hsl(237,49%,15%)] opacity-25 m-2" /> */}
           <OptionButton name={housePick} disabled />
-          <span className="uppercase text-white font-semibold tracking-widest text-sm">
+          <span className="uppercase text-white font-semibold tracking-widest text-sm absolute -bottom-11 whitespace-nowrap">
             The house picked
           </span>
         </div>
       </div>
-      <div className="mt-20 flex flex-col gap-6 items-center">
+      <div className="mt-28 flex flex-col gap-6 items-center">
         <span className="text-white text-5xl font-bold tracking-wider uppercase text-center">
           {message}
         </span>
-        <button className="w-56 h-12 font-semibold tracking-widest uppercase text-gray-700 bg-white rounded-lg">
+        <button
+          className="w-56 h-12 font-semibold tracking-widest uppercase text-gray-700 bg-white rounded-lg"
+          onClick={onPlayAgain}
+        >
           Play again
         </button>
       </div>
@@ -170,25 +207,25 @@ function getRandomPick(): Picks {
   }
 }
 
-function getWinner(playerPick: Picks, housePick: Picks) {
+function getResult(playerPick: Picks, housePick: Picks): Result {
   if (playerPick === 'paper' && housePick === 'rock') {
-    return 'player';
+    return 'win';
   }
   if (playerPick === 'rock' && housePick === 'scissors') {
-    return 'player';
+    return 'win';
   }
   if (playerPick === 'scissors' && housePick === 'paper') {
-    return 'player';
+    return 'win';
   }
 
   if (housePick === 'paper' && playerPick === 'rock') {
-    return 'house';
+    return 'lose';
   }
   if (housePick === 'rock' && playerPick === 'scissors') {
-    return 'house';
+    return 'lose';
   }
   if (housePick === 'scissors' && playerPick === 'paper') {
-    return 'house';
+    return 'lose';
   }
 
   return 'draw';

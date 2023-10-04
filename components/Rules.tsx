@@ -7,7 +7,7 @@ export default function Rules({ onToggle }: { onToggle: () => void }) {
       <h2 className="mb-28 text-2xl uppercase font-bold text-gray-700">
         Rules
       </h2>
-      <div>
+      <div className="mb-20">
         <Image
           src={rulesImg}
           alt="Paper beats rock. Rock beats scissors. Scissors beats paper."

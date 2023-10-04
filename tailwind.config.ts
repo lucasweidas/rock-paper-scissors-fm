@@ -33,6 +33,8 @@ const config: Config = {
           'linear-gradient(90deg, hsl(349, 71%, 52%), hsl(349, 70%, 56%))',
         'radial-1':
           'radial-gradient(circle at 50% 0%, hsl(214, 47%, 23%), hsl(237, 49%, 15%))',
+        'radial-2':
+          'radial-gradient(circle at 50% 50%, hsl(0, 0%, 100%, 0.09) 40%, hsl(0, 0%, 100%, 0.06) 40%, hsl(0, 0%, 100%, 0.06) 55%, hsl(0, 0%, 100%, 0.03) 55%)',
         triangle: 'url("/images/bg-triangle.svg")',
       },
       boxShadow: {

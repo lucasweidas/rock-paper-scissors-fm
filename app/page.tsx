@@ -6,7 +6,7 @@ import logo from '@/public/images/logo.svg';
 import paperIcon from '@/public/images/icon-paper.svg';
 import scissorsIcon from '@/public/images/icon-scissors.svg';
 import rockIcon from '@/public/images/icon-rock.svg';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 type Picks = 'paper' | 'scissors' | 'rock';
 type Result = 'win' | 'lose' | 'draw';
@@ -40,7 +40,7 @@ export default function Home() {
   }
 
   return (
-    <main>
+    <main className="overflow-x-hidden">
       <h1 className="sr-only">
         Choose one of the options below to start playing.
       </h1>
@@ -115,20 +115,32 @@ function Playing({
     <>
       <div className="flex justify-between items-center">
         <div className="flex flex-col items-center relative">
-          <OptionButton name={playerPick} disabled />
+          {result === 'win' ? (
+            <WinnerWrapper>
+              <OptionButton name={playerPick} disabled />
+            </WinnerWrapper>
+          ) : (
+            <OptionButton name={playerPick} disabled />
+          )}
           <span className="uppercase text-white font-semibold tracking-widest text-sm absolute -bottom-11">
             You picked
           </span>
         </div>
         <div className="flex flex-col items-center relative">
           {/* <div className="w-28 h-28 rounded-full bg-[hsl(237,49%,15%)] opacity-25 m-2" /> */}
-          <OptionButton name={housePick} disabled />
+          {result === 'lose' ? (
+            <WinnerWrapper>
+              <OptionButton name={housePick} disabled />
+            </WinnerWrapper>
+          ) : (
+            <OptionButton name={housePick} disabled />
+          )}
           <span className="uppercase text-white font-semibold tracking-widest text-sm absolute -bottom-11 whitespace-nowrap">
             The house picked
           </span>
         </div>
       </div>
-      <div className="mt-28 flex flex-col gap-6 items-center">
+      <div className="mt-32 flex flex-col gap-6 items-center">
         <span className="text-white text-5xl font-bold tracking-wider uppercase text-center">
           {message}
         </span>
@@ -140,6 +152,15 @@ function Playing({
         </button>
       </div>
     </>
+  );
+}
+
+function WinnerWrapper({ children }: { children: ReactNode }) {
+  return (
+    <div className="relative">
+      <span className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-72 h-72 rounded-full -z-[1] bg-radial-2" />
+      {children}
+    </div>
   );
 }
 

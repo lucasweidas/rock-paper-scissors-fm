@@ -7,6 +7,7 @@ import paperIcon from '@/public/images/icon-paper.svg';
 import scissorsIcon from '@/public/images/icon-scissors.svg';
 import rockIcon from '@/public/images/icon-rock.svg';
 import { ReactNode, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 type Picks = 'paper' | 'scissors' | 'rock';
 type Result = 'win' | 'lose' | 'draw';
@@ -15,16 +16,13 @@ export default function Home() {
   const [score, setScore] = useState(0);
   const [playerPick, setPlayerPick] = useState<Picks | null>(null);
   const [housePick, setHousePick] = useState<Picks | null>(null);
-  const [result, setResult] = useState<Result | null>(null);
+  const result = playerPick ? getResult(playerPick, housePick!) : null;
 
   function handlePlayerPick(pick: Picks) {
     const housePick = getRandomPick();
-    const result = getResult(pick, housePick);
 
     setPlayerPick(pick);
     setHousePick(housePick);
-    setResult(result);
-    handleScoreChange(result);
   }
 
   function handleScoreChange(result: Result) {
@@ -37,6 +35,7 @@ export default function Home() {
 
   function handlePlayAgain() {
     setPlayerPick(null);
+    setHousePick(null);
   }
 
   return (
@@ -64,18 +63,20 @@ export default function Home() {
           </div>
         </div>
         <div className="max-w-xs mx-auto mt-24 w-full">
-          {playerPick ? (
-            <Playing
-              playerPick={playerPick}
-              housePick={housePick!}
-              result={result!}
-              onPlayAgain={handlePlayAgain}
-            />
-          ) : (
-            <Picking onPick={handlePlayerPick} />
-          )}
+          <AnimatePresence initial={false}>
+            {playerPick ? (
+              <Playing
+                playerPick={playerPick}
+                housePick={housePick!}
+                result={result!}
+                onPlayAgain={handlePlayAgain}
+                updateScore={handleScoreChange}
+              />
+            ) : (
+              <Picking onPick={handlePlayerPick} />
+            )}
+          </AnimatePresence>
         </div>
-
         <RulesWrapper />
       </div>
     </main>
@@ -97,52 +98,111 @@ function Playing({
   housePick,
   result,
   onPlayAgain,
+  updateScore,
 }: {
   playerPick: Picks;
   housePick: Picks;
   result: Result;
   onPlayAgain: () => void;
+  updateScore: (result: Result) => void;
 }) {
-  let message = 'Draw';
+  let resultMessage = 'Draw';
 
   if (result === 'win') {
-    message = 'You win';
+    resultMessage = 'You win';
   } else if (result === 'lose') {
-    message = 'You lose';
+    resultMessage = 'You lose';
   }
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{
+        opacity: 1,
+        transition: {
+          duration: 0.5,
+          ease: 'easeIn',
+        },
+      }}
+    >
       <div className="flex justify-between items-center">
         <div className="flex flex-col items-center relative">
-          {result === 'win' ? (
-            <WinnerWrapper>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: {
+                duration: 0.5,
+                ease: 'easeIn',
+              },
+            }}
+          >
+            {result === 'win' ? (
+              <WinnerWrapper>
+                <OptionButton name={playerPick} disabled />
+              </WinnerWrapper>
+            ) : (
               <OptionButton name={playerPick} disabled />
-            </WinnerWrapper>
-          ) : (
-            <OptionButton name={playerPick} disabled />
-          )}
+            )}
+          </motion.div>
           <span className="uppercase text-white font-semibold tracking-widest text-sm absolute -bottom-11">
             You picked
           </span>
         </div>
         <div className="flex flex-col items-center relative">
-          {/* <div className="w-28 h-28 rounded-full bg-[hsl(237,49%,15%)] opacity-25 m-2" /> */}
-          {result === 'lose' ? (
-            <WinnerWrapper>
+          <motion.div
+            className="w-28 h-28 border-transparent rounded-full bg-[hsl(237,49%,15%)] opacity-25 m-2"
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: {
+                duration: 0.5,
+                ease: 'easeIn',
+              },
+            }}
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: {
+                delay: 1,
+                duration: 0.5,
+                ease: 'easeIn',
+              },
+            }}
+            className="absolute top-0 left-0"
+          >
+            {result === 'lose' ? (
+              <WinnerWrapper>
+                <OptionButton name={housePick} disabled />
+              </WinnerWrapper>
+            ) : (
               <OptionButton name={housePick} disabled />
-            </WinnerWrapper>
-          ) : (
-            <OptionButton name={housePick} disabled />
-          )}
+            )}
+          </motion.div>
           <span className="uppercase text-white font-semibold tracking-widest text-sm absolute -bottom-11 whitespace-nowrap">
             The house picked
           </span>
         </div>
       </div>
-      <div className="mt-32 flex flex-col gap-6 items-center">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          transition: {
+            delay: 1.5,
+            duration: 0.5,
+            ease: 'easeIn',
+          },
+        }}
+        onAnimationComplete={() => {
+          updateScore(result);
+        }}
+        className="mt-32 flex flex-col gap-6 items-center"
+      >
         <span className="text-white text-5xl font-bold tracking-wider uppercase text-center">
-          {message}
+          {resultMessage}
         </span>
         <button
           className="w-56 h-12 font-semibold tracking-widest uppercase text-gray-700 bg-white rounded-lg"
@@ -150,15 +210,26 @@ function Playing({
         >
           Play again
         </button>
-      </div>
-    </>
+      </motion.div>
+    </motion.div>
   );
 }
 
 function WinnerWrapper({ children }: { children: ReactNode }) {
   return (
     <div className="relative">
-      <span className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-72 h-72 rounded-full -z-[1] bg-radial-2" />
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          transition: {
+            delay: 1.5,
+            duration: 0.5,
+            ease: 'easeIn',
+          },
+        }}
+        className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-72 h-72 rounded-full -z-[1] bg-radial-2"
+      />
       {children}
     </div>
   );

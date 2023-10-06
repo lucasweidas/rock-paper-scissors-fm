@@ -8,6 +8,7 @@ import scissorsIcon from '@/public/images/icon-scissors.svg';
 import rockIcon from '@/public/images/icon-rock.svg';
 import { ReactNode, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { twMerge } from 'tailwind-merge';
 
 type Picks = 'paper' | 'scissors' | 'rock';
 type Result = 'win' | 'lose' | 'draw';
@@ -45,8 +46,8 @@ export default function Home() {
         Choose one of the options below to start playing.
       </h1>
       <div className="px-7 pt-8 pb-14 min-h-screen flex flex-col">
-        <div className="flex gap-8 justify-between items-center py-3 pl-5 pr-3 rounded-lg shadow-[0_0_2px_2px_hsl(217,16%,45%),inset_0_0_2px_2px_hsl(217,16%,45%)] max-w-md mx-auto w-full">
-          <div className="w-[82px] h-[51px] relative">
+        <div className="flex gap-4 justify-between items-center py-3 pl-5 pr-3 rounded-lg shadow-[0_0_2px_2px_hsl(217,16%,45%),inset_0_0_2px_2px_hsl(217,16%,45%)] max-w-md mx-auto w-full">
+          <div className="w-[82px] h-[51px] relative flex-shrink-0">
             <Image
               src={logo}
               alt="Rock, Paper, Scissors"
@@ -86,10 +87,22 @@ export default function Home() {
 
 function Picking({ onPick }: { onPick: onPick }) {
   return (
-    <div className="flex flex-wrap gap-y-4 gap-x-[3.25rem] justify-center bg-triangle bg-no-repeat bg-[size:230px_160px] bg-center">
-      <PickButton label="paper" onPick={onPick} />
-      <PickButton label="scissors" onPick={onPick} />
-      <PickButton label="rock" onPick={onPick} />
+    <div className="w-full aspect-[2/1.8] relative bg-triangle bg-no-repeat bg-[size:clamp(180px,56%,230px)_clamp(90px,56%,160px)] xs:bg-[size:230px_160px] bg-center">
+      <PickButton
+        label="paper"
+        onPick={onPick}
+        className="absolute top-0 left-0 w-[clamp(5rem,43%,8rem)] xs:w-32"
+      />
+      <PickButton
+        label="scissors"
+        onPick={onPick}
+        className="absolute top-0 right-0 w-[clamp(5rem,43%,8rem)] xs:w-32"
+      />
+      <PickButton
+        label="rock"
+        onPick={onPick}
+        className="absolute bottom-0 left-2/4 -translate-x-2/4 w-[clamp(5rem,43%,8rem)] xs:w-32"
+      />
     </div>
   );
 }
@@ -243,16 +256,21 @@ function PickButton({
   label,
   onPick,
   disabled = false,
+  className,
 }: {
   label: Picks;
   onPick?: onPick;
   disabled?: boolean;
+  className?: string;
 }) {
   const pickConfig = getPickConfig(label);
 
   return (
     <button
-      className={`w-32 h-32 rounded-full shadow-option-b p-4 hover:opacity-80 focus-visible:opacity-80 transition-opacity disabled:!opacity-100 ${pickConfig.buttonClass}`}
+      className={twMerge(
+        `w-32 aspect-square rounded-full shadow-option-b p-[clamp(0.625rem,5.5%,1rem)] xs:p-4 hover:opacity-80 focus-visible:opacity-80 transition-opacity disabled:!opacity-100 ${pickConfig.buttonClass}`,
+        className
+      )}
       aria-label={label}
       onClick={() => onPick?.(label)}
       disabled={disabled}
@@ -273,19 +291,19 @@ function getPickConfig(pick: Picks) {
     case 'paper':
       return {
         src: paperIcon,
-        imageClass: 'w-[43px] h-[53px]',
+        imageClass: 'w-[clamp(25px,43%,43px)] xs:w-[43px]',
         buttonClass: 'bg-linear-2',
       };
     case 'scissors':
       return {
         src: scissorsIcon,
-        imageClass: 'w-[45px] h-[52px]',
+        imageClass: 'w-[clamp(25px,43%,43px)] xs:w-[43px]',
         buttonClass: 'bg-linear-1',
       };
     case 'rock':
       return {
         src: rockIcon,
-        imageClass: 'w-[43px] h-[53px]',
+        imageClass: 'w-[clamp(25px,43%,43px)] xs:w-[43px]',
         buttonClass: 'bg-linear-3',
       };
   }

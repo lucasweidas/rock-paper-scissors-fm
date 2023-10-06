@@ -41,6 +41,9 @@ const config: Config = {
         'option-b': 'inset 0 -6px 0 hsla(0, 0%, 0%, 0.3)',
         'option-t': 'inset 0 6px 0 hsla(0, 0%, 0%, 0.15)',
       },
+      screens: {
+        xs: '375px',
+      },
     },
   },
   plugins: [],

@@ -21,7 +21,7 @@ export default function Rules({ onToggle }: { onToggle: () => void }) {
 function CloseButton({ onToggle }: { onToggle: () => void }) {
   return (
     <button
-      className="mt-auto opacity-25 hover:opacity-75"
+      className="mt-auto opacity-25 hover:opacity-75 focus-visible:opacity-75 transition-opacity"
       aria-label="close rules"
       onClick={onToggle}
     >

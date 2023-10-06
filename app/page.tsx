@@ -11,6 +11,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 type Picks = 'paper' | 'scissors' | 'rock';
 type Result = 'win' | 'lose' | 'draw';
+type onPick = (pick: Picks) => void;
 
 export default function Home() {
   const [score, setScore] = useState(0);
@@ -83,12 +84,12 @@ export default function Home() {
   );
 }
 
-function Picking({ onPick }: { onPick: (pick: Picks) => void }) {
+function Picking({ onPick }: { onPick: onPick }) {
   return (
     <div className="flex flex-wrap gap-y-4 gap-x-[3.25rem] justify-center bg-triangle bg-no-repeat bg-[size:230px_160px] bg-center">
-      <OptionButton name="paper" onPick={onPick} />
-      <OptionButton name="scissors" onPick={onPick} />
-      <OptionButton name="rock" onPick={onPick} />
+      <PickButton label="paper" onPick={onPick} />
+      <PickButton label="scissors" onPick={onPick} />
+      <PickButton label="rock" onPick={onPick} />
     </div>
   );
 }
@@ -107,11 +108,14 @@ function Playing({
   updateScore: (result: Result) => void;
 }) {
   let resultMessage = 'Draw';
+  let playAgainClass = '';
 
   if (result === 'win') {
     resultMessage = 'You win';
+    playAgainClass = 'hover:text-blue-500 focus-visible:text-blue-500';
   } else if (result === 'lose') {
     resultMessage = 'You lose';
+    playAgainClass = 'hover:text-red-500 focus-visible:text-red-500';
   }
 
   return (
@@ -139,10 +143,10 @@ function Playing({
           >
             {result === 'win' ? (
               <WinnerWrapper>
-                <OptionButton name={playerPick} disabled />
+                <PickButton label={playerPick} disabled />
               </WinnerWrapper>
             ) : (
-              <OptionButton name={playerPick} disabled />
+              <PickButton label={playerPick} disabled />
             )}
           </motion.div>
           <span className="uppercase text-white font-semibold tracking-widest text-sm absolute -bottom-11">
@@ -175,10 +179,10 @@ function Playing({
           >
             {result === 'lose' ? (
               <WinnerWrapper>
-                <OptionButton name={housePick} disabled />
+                <PickButton label={housePick} disabled />
               </WinnerWrapper>
             ) : (
-              <OptionButton name={housePick} disabled />
+              <PickButton label={housePick} disabled />
             )}
           </motion.div>
           <span className="uppercase text-white font-semibold tracking-widest text-sm absolute -bottom-11 whitespace-nowrap">
@@ -205,7 +209,7 @@ function Playing({
           {resultMessage}
         </span>
         <button
-          className="w-56 h-12 font-semibold tracking-widest uppercase text-gray-700 bg-white rounded-lg"
+          className={`w-56 h-12 font-semibold tracking-widest text-gray-700 uppercase bg-white rounded-lg transition-colors ${playAgainClass}`}
           onClick={onPlayAgain}
         >
           Play again
@@ -235,28 +239,28 @@ function WinnerWrapper({ children }: { children: ReactNode }) {
   );
 }
 
-function OptionButton({
-  name,
+function PickButton({
+  label,
   onPick,
   disabled = false,
 }: {
-  name: Picks;
-  onPick?: (pick: Picks) => void;
+  label: Picks;
+  onPick?: onPick;
   disabled?: boolean;
 }) {
-  const pickConfig = getPickConfig(name);
+  const pickConfig = getPickConfig(label);
 
   return (
     <button
-      className={`w-32 h-32 rounded-full shadow-option-b p-4 ${pickConfig.buttonClass}`}
-      aria-label={name}
-      onClick={() => onPick?.(name)}
+      className={`w-32 h-32 rounded-full shadow-option-b p-4 hover:opacity-80 focus-visible:opacity-80 transition-opacity disabled:!opacity-100 ${pickConfig.buttonClass}`}
+      aria-label={label}
+      onClick={() => onPick?.(label)}
       disabled={disabled}
     >
       <span className="bg-white w-full h-full rounded-full flex items-center justify-center shadow-option-t">
         <Image
           src={pickConfig.src}
-          alt={name}
+          alt={label}
           className={pickConfig.imageClass}
         />
       </span>

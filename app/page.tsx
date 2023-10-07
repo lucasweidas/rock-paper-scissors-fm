@@ -143,7 +143,7 @@ function Playing({
       }}
     >
       <div className="flex justify-between items-center">
-        <div className="flex flex-col items-center relative">
+        <div className="relative">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{
@@ -153,22 +153,22 @@ function Playing({
                 ease: 'easeIn',
               },
             }}
+            className="relative top-0 right-0"
           >
-            {result === 'win' ? (
-              <WinnerWrapper>
-                <PickButton label={playerPick} disabled />
-              </WinnerWrapper>
-            ) : (
-              <PickButton label={playerPick} disabled />
-            )}
+            {result === 'win' && <WinnerBackground />}
+            <PickButton
+              label={playerPick}
+              disabled
+              className="w-[clamp(5rem,43%,8rem)] xs:w-32 aspect-square"
+            />
           </motion.div>
-          <span className="uppercase text-white font-semibold tracking-widest text-sm absolute -bottom-11">
+          <span className="uppercase text-white font-semibold tracking-widest text-sm absolute -bottom-11 left-2/4 -translate-x-2/4 text-center whitespace-nowrap">
             You picked
           </span>
         </div>
-        <div className="flex flex-col items-center relative">
+        <div className="relative w-[clamp(5rem,43%,8rem)] xs:w-32 aspect-square">
           <motion.div
-            className="w-28 h-28 border-transparent rounded-full bg-[hsl(237,49%,15%)] opacity-25 m-2"
+            className="w-[calc(100%-1rem)] aspect-square border-transparent rounded-full bg-[hsl(237,49%,15%)] opacity-25 absolute"
             initial={{ opacity: 0 }}
             animate={{
               opacity: 1,
@@ -177,6 +177,7 @@ function Playing({
                 ease: 'easeIn',
               },
             }}
+            aria-hidden="true"
           />
           <motion.div
             initial={{ opacity: 0 }}
@@ -188,17 +189,16 @@ function Playing({
                 ease: 'easeIn',
               },
             }}
-            className="absolute top-0 left-0"
+            className="absolute top-0 left-0 w-full aspect-square"
           >
-            {result === 'lose' ? (
-              <WinnerWrapper>
-                <PickButton label={housePick} disabled />
-              </WinnerWrapper>
-            ) : (
-              <PickButton label={housePick} disabled />
-            )}
+            {result === 'lose' && <WinnerBackground />}
+            <PickButton
+              label={housePick}
+              disabled
+              className="w-full aspect-square p-[clamp(0.625rem,4.4vw,1rem)]"
+            />
           </motion.div>
-          <span className="uppercase text-white font-semibold tracking-widest text-sm absolute -bottom-11 whitespace-nowrap">
+          <span className="uppercase text-white font-semibold tracking-widest text-sm absolute -bottom-11 left-2/4 -translate-x-2/4 text-center whitespace-nowrap">
             The house picked
           </span>
         </div>
@@ -232,23 +232,20 @@ function Playing({
   );
 }
 
-function WinnerWrapper({ children }: { children: ReactNode }) {
+function WinnerBackground() {
   return (
-    <div className="relative">
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{
-          opacity: 1,
-          transition: {
-            delay: 1.5,
-            duration: 0.5,
-            ease: 'easeIn',
-          },
-        }}
-        className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-72 h-72 rounded-full -z-[1] bg-radial-2"
-      />
-      {children}
-    </div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{
+        opacity: 1,
+        transition: {
+          delay: 1.5,
+          duration: 0.5,
+          ease: 'easeIn',
+        },
+      }}
+      className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-72 h-72 rounded-full -z-[1] bg-radial-2"
+    />
   );
 }
 
@@ -268,7 +265,7 @@ function PickButton({
   return (
     <button
       className={twMerge(
-        `w-32 aspect-square rounded-full shadow-option-b p-[clamp(0.625rem,5.5%,1rem)] xs:p-4 hover:opacity-80 focus-visible:opacity-80 transition-opacity disabled:!opacity-100 ${pickConfig.buttonClass}`,
+        `aspect-square rounded-full shadow-option-b p-[clamp(0.625rem,5.5%,1rem)] xs:p-4 hover:opacity-80 focus-visible:opacity-80 transition-opacity disabled:!opacity-100 ${pickConfig.buttonClass}`,
         className
       )}
       aria-label={label}

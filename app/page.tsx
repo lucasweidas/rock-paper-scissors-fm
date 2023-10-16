@@ -1,50 +1,15 @@
 'use client';
 
 import Image from 'next/image';
-import RulesWrapper from '@/components/RulesWrapper';
-import logo from '@/public/images/logo.svg';
+import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { AnimatePresence, Variants, motion } from 'framer-motion';
-import { twMerge } from 'tailwind-merge';
+import Playing from '@/components/playing';
+import Picking from '@/components/picking';
+import RulesWrapper from '@/components/rulesWrapper';
+import { getRandomPick, getResult } from '@/utils';
 import type { Picks, Result } from '@/types';
-import { getPickConfig, getRandomPick, getResult } from '@/utils';
 
-type onPick = (pick: Picks) => void;
-
-const fadeIn: Variants = {
-  initial: { opacity: 0 },
-  animate: {
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-      ease: 'easeIn',
-    },
-  },
-};
-
-const fadeInMediumDelay: Variants = {
-  initial: { opacity: 0 },
-  animate: {
-    opacity: 1,
-    transition: {
-      delay: 1,
-      duration: 0.5,
-      ease: 'easeIn',
-    },
-  },
-};
-
-const fadeInLargeDelay: Variants = {
-  initial: { opacity: 0 },
-  animate: {
-    opacity: 1,
-    transition: {
-      delay: 1.5,
-      duration: 0.5,
-      ease: 'easeIn',
-    },
-  },
-};
+import logo from '@/public/images/logo.svg';
 
 export default function Home() {
   const [score, setScore] = useState(0);
@@ -114,156 +79,5 @@ export default function Home() {
         <RulesWrapper />
       </div>
     </main>
-  );
-}
-
-function Picking({ onPick }: { onPick: onPick }) {
-  return (
-    <div className="w-full aspect-[2/1.8] relative bg-triangle bg-no-repeat bg-[size:clamp(180px,56%,230px)_clamp(90px,56%,160px)] xs:bg-[size:230px_160px] bg-center">
-      <PickButton
-        label="paper"
-        onPick={onPick}
-        className="absolute top-0 left-0 w-[clamp(5rem,43%,8rem)] xs:w-32"
-      />
-      <PickButton
-        label="scissors"
-        onPick={onPick}
-        className="absolute top-0 right-0 w-[clamp(5rem,43%,8rem)] xs:w-32"
-      />
-      <PickButton
-        label="rock"
-        onPick={onPick}
-        className="absolute bottom-0 left-2/4 -translate-x-2/4 w-[clamp(5rem,43%,8rem)] xs:w-32"
-      />
-    </div>
-  );
-}
-
-function Playing({
-  playerPick,
-  housePick,
-  result,
-  onPlayAgain,
-  updateScore,
-}: {
-  playerPick: Picks;
-  housePick: Picks;
-  result: Result;
-  onPlayAgain: () => void;
-  updateScore: (result: Result) => void;
-}) {
-  let resultMessage = 'Draw';
-  let playAgainClass = '';
-
-  if (result === 'win') {
-    resultMessage = 'You win';
-    playAgainClass = 'hover:text-blue-500 focus-visible:text-blue-500';
-  } else if (result === 'lose') {
-    resultMessage = 'You lose';
-    playAgainClass = 'hover:text-red-500 focus-visible:text-red-500';
-  }
-
-  return (
-    <motion.div variants={fadeIn} initial="initial" animate="animate">
-      <div className="flex justify-between items-center">
-        <div className="relative w-[clamp(5rem,43%,8rem)] xs:w-32 aspect-square flex items-center justify-center">
-          <motion.div
-            variants={fadeIn}
-            initial="initial"
-            animate="animate"
-            className="absolute top-0 right-0 w-full aspect-square"
-          >
-            {result === 'win' && <WinnerBackground />}
-            <PickButton label={playerPick} disabled />
-          </motion.div>
-          <span className="uppercase text-white font-semibold tracking-widest text-sm absolute top-[calc(100%+1.5rem)] text-center xs:whitespace-nowrap">
-            You picked
-          </span>
-        </div>
-        <div className="relative w-[clamp(5rem,43%,8rem)] xs:w-32 aspect-square flex items-center justify-center">
-          <motion.div
-            className="w-[calc(100%-1rem)] aspect-square border-transparent rounded-full bg-[hsl(237,49%,15%)] opacity-25 absolute"
-            variants={fadeIn}
-            initial="initial"
-            animate="animate"
-            aria-hidden="true"
-          />
-          <motion.div
-            variants={fadeInMediumDelay}
-            initial="initial"
-            animate="animate"
-            className="absolute top-0 left-0 w-full aspect-square"
-          >
-            {result === 'lose' && <WinnerBackground />}
-            <PickButton label={housePick} disabled />
-          </motion.div>
-          <span className="uppercase text-white font-semibold tracking-widest text-sm absolute top-[calc(100%+1.5rem)] text-center xs:whitespace-nowrap">
-            The house picked
-          </span>
-        </div>
-      </div>
-      <motion.div
-        variants={fadeInLargeDelay}
-        initial="initial"
-        animate="animate"
-        onAnimationComplete={() => {
-          updateScore(result);
-        }}
-        className="mt-32 flex flex-col gap-6 items-center"
-      >
-        <span className="text-white text-[clamp(2rem,14vw,3rem)] xs:text-5xl font-bold tracking-wider !leading-none uppercase text-center">
-          {resultMessage}
-        </span>
-        <button
-          className={`w-[min(100%,14rem)] px-4 py-3 font-semibold tracking-widest text-gray-700 uppercase bg-white rounded-lg transition-colors ${playAgainClass}`}
-          onClick={onPlayAgain}
-        >
-          Play again
-        </button>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-function WinnerBackground() {
-  return (
-    <motion.div
-      variants={fadeInLargeDelay}
-      className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-[clamp(12rem,80vw,18rem)] xs:w-72 aspect-square rounded-full -z-[1] bg-radial-2"
-    />
-  );
-}
-
-function PickButton({
-  label,
-  onPick,
-  disabled = false,
-  className,
-}: {
-  label: Picks;
-  onPick?: onPick;
-  disabled?: boolean;
-  className?: string;
-}) {
-  const pickConfig = getPickConfig(label);
-
-  return (
-    <button
-      className={twMerge(
-        `w-full aspect-square rounded-full shadow-option-b p-[clamp(0.625rem,4.2vw,1rem)] xs:p-4 hover:opacity-80 focus-visible:opacity-80 transition-opacity disabled:!opacity-100 ${pickConfig.buttonClass}`,
-        className
-      )}
-      aria-label={label}
-      onClick={() => onPick?.(label)}
-      disabled={disabled}
-    >
-      <span className="bg-white w-full h-full rounded-full flex items-center justify-center shadow-option-t">
-        <Image
-          src={pickConfig.src}
-          alt={label}
-          className={pickConfig.imageClass}
-        />
-      </span>
-    </button>
   );
 }

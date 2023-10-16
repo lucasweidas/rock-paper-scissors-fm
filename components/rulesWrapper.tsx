@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import Rules from './Rules';
+import Rules from './rules';
 
 export default function RulesWrapper() {
   const [isOpen, setIsOpen] = useState(false);

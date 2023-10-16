@@ -6,13 +6,48 @@ import logo from '@/public/images/logo.svg';
 import paperIcon from '@/public/images/icon-paper.svg';
 import scissorsIcon from '@/public/images/icon-scissors.svg';
 import rockIcon from '@/public/images/icon-rock.svg';
-import { ReactNode, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
+import { AnimatePresence, Variants, motion } from 'framer-motion';
 import { twMerge } from 'tailwind-merge';
 
 type Picks = 'paper' | 'scissors' | 'rock';
 type Result = 'win' | 'lose' | 'draw';
 type onPick = (pick: Picks) => void;
+
+const fadeIn: Variants = {
+  initial: { opacity: 0 },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      ease: 'easeIn',
+    },
+  },
+};
+
+const fadeInMediumDelay: Variants = {
+  initial: { opacity: 0 },
+  animate: {
+    opacity: 1,
+    transition: {
+      delay: 1,
+      duration: 0.5,
+      ease: 'easeIn',
+    },
+  },
+};
+
+const fadeInLargeDelay: Variants = {
+  initial: { opacity: 0 },
+  animate: {
+    opacity: 1,
+    transition: {
+      delay: 1.5,
+      duration: 0.5,
+      ease: 'easeIn',
+    },
+  },
+};
 
 export default function Home() {
   const [score, setScore] = useState(0);
@@ -132,97 +167,58 @@ function Playing({
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{
-        opacity: 1,
-        transition: {
-          duration: 0.5,
-          ease: 'easeIn',
-        },
-      }}
-    >
+    <motion.div variants={fadeIn} initial="initial" animate="animate">
       <div className="flex justify-between items-center">
-        <div className="relative">
+        <div className="relative w-[clamp(5rem,43%,8rem)] xs:w-32 aspect-square flex items-center justify-center">
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 1,
-              transition: {
-                duration: 0.5,
-                ease: 'easeIn',
-              },
-            }}
-            className="relative top-0 right-0"
+            variants={fadeIn}
+            initial="initial"
+            animate="animate"
+            className="absolute top-0 right-0 w-full aspect-square"
           >
             {result === 'win' && <WinnerBackground />}
-            <PickButton
-              label={playerPick}
-              disabled
-              className="w-[clamp(5rem,43%,8rem)] xs:w-32 aspect-square"
-            />
+            <PickButton label={playerPick} disabled />
           </motion.div>
-          <span className="uppercase text-white font-semibold tracking-widest text-sm absolute -bottom-11 left-2/4 -translate-x-2/4 text-center whitespace-nowrap">
+          <span className="uppercase text-white font-semibold tracking-widest text-sm absolute top-[calc(100%+1.5rem)] text-center xs:whitespace-nowrap">
             You picked
           </span>
         </div>
-        <div className="relative w-[clamp(5rem,43%,8rem)] xs:w-32 aspect-square">
+        <div className="relative w-[clamp(5rem,43%,8rem)] xs:w-32 aspect-square flex items-center justify-center">
           <motion.div
             className="w-[calc(100%-1rem)] aspect-square border-transparent rounded-full bg-[hsl(237,49%,15%)] opacity-25 absolute"
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 1,
-              transition: {
-                duration: 0.5,
-                ease: 'easeIn',
-              },
-            }}
+            variants={fadeIn}
+            initial="initial"
+            animate="animate"
             aria-hidden="true"
           />
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 1,
-              transition: {
-                delay: 1,
-                duration: 0.5,
-                ease: 'easeIn',
-              },
-            }}
+            variants={fadeInMediumDelay}
+            initial="initial"
+            animate="animate"
             className="absolute top-0 left-0 w-full aspect-square"
           >
             {result === 'lose' && <WinnerBackground />}
-            <PickButton
-              label={housePick}
-              disabled
-              className="w-full aspect-square p-[clamp(0.625rem,4.4vw,1rem)]"
-            />
+            <PickButton label={housePick} disabled />
           </motion.div>
-          <span className="uppercase text-white font-semibold tracking-widest text-sm absolute -bottom-11 left-2/4 -translate-x-2/4 text-center whitespace-nowrap">
+          <span className="uppercase text-white font-semibold tracking-widest text-sm absolute top-[calc(100%+1.5rem)] text-center xs:whitespace-nowrap">
             The house picked
           </span>
         </div>
       </div>
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{
-          opacity: 1,
-          transition: {
-            delay: 1.5,
-            duration: 0.5,
-            ease: 'easeIn',
-          },
-        }}
+        variants={fadeInLargeDelay}
+        initial="initial"
+        animate="animate"
         onAnimationComplete={() => {
           updateScore(result);
         }}
         className="mt-32 flex flex-col gap-6 items-center"
       >
-        <span className="text-white text-5xl font-bold tracking-wider uppercase text-center">
+        <span className="text-white text-[clamp(2rem,14vw,3rem)] xs:text-5xl font-bold tracking-wider !leading-none uppercase text-center">
           {resultMessage}
         </span>
         <button
-          className={`w-56 h-12 font-semibold tracking-widest text-gray-700 uppercase bg-white rounded-lg transition-colors ${playAgainClass}`}
+          className={`w-[min(100%,14rem)] px-4 py-3 font-semibold tracking-widest text-gray-700 uppercase bg-white rounded-lg transition-colors ${playAgainClass}`}
           onClick={onPlayAgain}
         >
           Play again
@@ -235,16 +231,8 @@ function Playing({
 function WinnerBackground() {
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{
-        opacity: 1,
-        transition: {
-          delay: 1.5,
-          duration: 0.5,
-          ease: 'easeIn',
-        },
-      }}
-      className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-72 h-72 rounded-full -z-[1] bg-radial-2"
+      variants={fadeInLargeDelay}
+      className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-[clamp(12rem,80vw,18rem)] xs:w-72 aspect-square rounded-full -z-[1] bg-radial-2"
     />
   );
 }
@@ -265,7 +253,7 @@ function PickButton({
   return (
     <button
       className={twMerge(
-        `aspect-square rounded-full shadow-option-b p-[clamp(0.625rem,5.5%,1rem)] xs:p-4 hover:opacity-80 focus-visible:opacity-80 transition-opacity disabled:!opacity-100 ${pickConfig.buttonClass}`,
+        `w-full aspect-square rounded-full shadow-option-b p-[clamp(0.625rem,4.2vw,1rem)] xs:p-4 hover:opacity-80 focus-visible:opacity-80 transition-opacity disabled:!opacity-100 ${pickConfig.buttonClass}`,
         className
       )}
       aria-label={label}

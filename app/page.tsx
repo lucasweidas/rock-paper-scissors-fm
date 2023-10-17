@@ -42,7 +42,7 @@ export default function Home() {
       <h1 className="sr-only">
         Choose one of the options below to start playing.
       </h1>
-      <div className="px-7 pt-8 pb-14 min-h-screen flex flex-col">
+      <div className="px-7 pt-8 md:pt-12 pb-14 md:pb-8 min-h-screen flex flex-col">
         <TopBar score={score} />
         <div className="mt-24 w-full">
           <AnimatePresence initial={false}>
@@ -58,7 +58,6 @@ export default function Home() {
               <Picking onPick={handlePlayerPick} />
             )}
           </AnimatePresence>
-          T
         </div>
         <RulesWrapper />
       </div>

@@ -32,41 +32,45 @@ export default function Playing({
       variants={fadeIn}
       initial="initial"
       animate="animate"
-      className="max-w-xs md:max-w-[59rem] mx-auto"
+      className="lg:relative max-w-xs md:max-w-[60rem] mx-auto"
     >
-      <div className="flex justify-between items-center">
-        <div className="relative w-[clamp(5rem,43%,8rem)] xs:w-32 md:w-[18rem] aspect-square flex flex-col items-center justify-center">
-          <motion.div
-            variants={fadeIn}
-            initial="initial"
-            animate="animate"
-            className="absolute top-0 right-0 w-full aspect-square"
-          >
-            {result === 'win' && <WinnerBackground />}
-            <PickButton label={playerPick} disabled className="md:p-8" />
-          </motion.div>
-          <span className="uppercase text-white font-semibold tracking-widest text-sm absolute top-[calc(100%+1.5rem)] text-center xs:whitespace-nowrap">
+      <div className="flex justify-between items-start">
+        <div className="w-[clamp(5rem,43%,8rem)] xs:w-32 md:w-[18rem] aspect-square flex flex-col items-center justify-center gap-6 md:flex-col-reverse md:gap-16">
+          <div className="w-full aspect-square">
+            <motion.div
+              variants={fadeIn}
+              initial="initial"
+              animate="animate"
+              className="relative w-full aspect-square"
+            >
+              {result === 'win' && <WinnerBackground />}
+              <PickButton label={playerPick} disabled className="md:p-8" />
+            </motion.div>
+          </div>
+          <span className="uppercase text-white font-semibold tracking-widest text-sm text-center xs:whitespace-nowrap md:text-2xl">
             You picked
           </span>
         </div>
-        <div className="relative w-[clamp(5rem,43%,8rem)] xs:w-32 md:w-[18rem] aspect-square flex items-center justify-center">
-          <motion.div
-            className="w-[calc(100%-1rem)] aspect-square border-transparent rounded-full bg-[hsl(237,49%,15%)] opacity-25 absolute"
-            variants={fadeIn}
-            initial="initial"
-            animate="animate"
-            aria-hidden="true"
-          />
-          <motion.div
-            variants={fadeInMediumDelay}
-            initial="initial"
-            animate="animate"
-            className="absolute top-0 left-0 w-full aspect-square"
-          >
-            {result === 'lose' && <WinnerBackground />}
-            <PickButton label={housePick} disabled className="md:p-8" />
-          </motion.div>
-          <span className="uppercase text-white font-semibold tracking-widest text-sm absolute top-[calc(100%+1.5rem)] text-center xs:whitespace-nowrap">
+        <div className="w-[clamp(5rem,43%,8rem)] xs:w-32 md:w-[18rem] aspect-square flex flex-col items-center justify-center gap-6 md:flex-col-reverse md:gap-16">
+          <div className="relative w-full aspect-square flex items-center justify-center">
+            <motion.div
+              className="w-[calc(100%-1rem)] aspect-square border-transparent rounded-full bg-[hsl(237,49%,15%)] opacity-25 absolute"
+              variants={fadeIn}
+              initial="initial"
+              animate="animate"
+              aria-hidden="true"
+            />
+            <motion.div
+              variants={fadeInMediumDelay}
+              initial="initial"
+              animate="animate"
+              className="relative w-full aspect-square"
+            >
+              {result === 'lose' && <WinnerBackground />}
+              <PickButton label={housePick} disabled className="md:p-8" />
+            </motion.div>
+          </div>
+          <span className="uppercase text-white font-semibold tracking-widest text-sm text-center xs:whitespace-nowrap md:text-2xl">
             The house picked
           </span>
         </div>
@@ -78,7 +82,7 @@ export default function Playing({
         onAnimationComplete={() => {
           updateScore(result);
         }}
-        className="mt-32 flex flex-col gap-6 items-center"
+        className="mt-32 flex flex-col gap-6 items-center lg:mt-0 lg:absolute lg:top-[10.5rem] lg:-translate-x-2/4 lg:left-2/4"
       >
         <span className="text-white text-[clamp(2rem,14vw,3rem)] xs:text-5xl font-bold tracking-wider !leading-none uppercase text-center">
           {resultMessage}

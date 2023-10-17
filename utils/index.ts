@@ -8,19 +8,19 @@ export function getPickConfig(pick: Picks) {
     case 'paper':
       return {
         src: paperIcon,
-        imageClass: 'w-[clamp(25px,43%,43px)] xs:w-[43px]',
+        imageClass: 'w-[clamp(25px,43%,43px)] xs:w-[43px] md:w-[66px]',
         buttonClass: 'bg-linear-2',
       };
     case 'scissors':
       return {
         src: scissorsIcon,
-        imageClass: 'w-[clamp(25px,43%,43px)] xs:w-[43px]',
+        imageClass: 'w-[clamp(25px,43%,43px)] xs:w-[43px] md:w-[66px]',
         buttonClass: 'bg-linear-1',
       };
     case 'rock':
       return {
         src: rockIcon,
-        imageClass: 'w-[clamp(25px,43%,43px)] xs:w-[43px]',
+        imageClass: 'w-[clamp(25px,43%,43px)] xs:w-[43px] md:w-[66px]',
         buttonClass: 'bg-linear-3',
       };
   }

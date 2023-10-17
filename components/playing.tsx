@@ -28,9 +28,14 @@ export default function Playing({
   }
 
   return (
-    <motion.div variants={fadeIn} initial="initial" animate="animate">
+    <motion.div
+      variants={fadeIn}
+      initial="initial"
+      animate="animate"
+      className="max-w-xs md:max-w-[59rem] mx-auto"
+    >
       <div className="flex justify-between items-center">
-        <div className="relative w-[clamp(5rem,43%,8rem)] xs:w-32 aspect-square flex items-center justify-center">
+        <div className="relative w-[clamp(5rem,43%,8rem)] xs:w-32 md:w-[18rem] aspect-square flex flex-col items-center justify-center">
           <motion.div
             variants={fadeIn}
             initial="initial"
@@ -38,13 +43,13 @@ export default function Playing({
             className="absolute top-0 right-0 w-full aspect-square"
           >
             {result === 'win' && <WinnerBackground />}
-            <PickButton label={playerPick} disabled />
+            <PickButton label={playerPick} disabled className="md:p-8" />
           </motion.div>
           <span className="uppercase text-white font-semibold tracking-widest text-sm absolute top-[calc(100%+1.5rem)] text-center xs:whitespace-nowrap">
             You picked
           </span>
         </div>
-        <div className="relative w-[clamp(5rem,43%,8rem)] xs:w-32 aspect-square flex items-center justify-center">
+        <div className="relative w-[clamp(5rem,43%,8rem)] xs:w-32 md:w-[18rem] aspect-square flex items-center justify-center">
           <motion.div
             className="w-[calc(100%-1rem)] aspect-square border-transparent rounded-full bg-[hsl(237,49%,15%)] opacity-25 absolute"
             variants={fadeIn}
@@ -59,7 +64,7 @@ export default function Playing({
             className="absolute top-0 left-0 w-full aspect-square"
           >
             {result === 'lose' && <WinnerBackground />}
-            <PickButton label={housePick} disabled />
+            <PickButton label={housePick} disabled className="md:p-8" />
           </motion.div>
           <span className="uppercase text-white font-semibold tracking-widest text-sm absolute top-[calc(100%+1.5rem)] text-center xs:whitespace-nowrap">
             The house picked
@@ -93,7 +98,7 @@ function WinnerBackground() {
   return (
     <motion.div
       variants={fadeInLargeDelay}
-      className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-[clamp(12rem,80vw,18rem)] xs:w-72 aspect-square rounded-full -z-[1] bg-radial-2"
+      className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-[clamp(12rem,80vw,18rem)] xs:w-72 md:w-[45.5rem] aspect-square rounded-full -z-[1] bg-radial-2"
     />
   );
 }

@@ -44,7 +44,7 @@ export default function Home() {
       </h1>
       <div className="px-7 pt-8 pb-14 min-h-screen flex flex-col">
         <TopBar score={score} />
-        <div className="max-w-xs mx-auto mt-24 w-full">
+        <div className="mt-24 w-full">
           <AnimatePresence initial={false}>
             {playerPick ? (
               <Playing

@@ -1,18 +1,19 @@
 import { Variants } from 'framer-motion';
 
 export const fadeIn: Variants = {
-  initial: { opacity: 0 },
+  initial: { opacity: 0, pointerEvents: 'none' },
   animate: {
     opacity: 1,
     transition: {
       duration: 0.5,
       ease: 'easeIn',
     },
+    pointerEvents: 'auto',
   },
 };
 
 export const fadeInMediumDelay: Variants = {
-  initial: { opacity: 0 },
+  initial: { opacity: 0, pointerEvents: 'none' },
   animate: {
     opacity: 1,
     transition: {
@@ -20,11 +21,12 @@ export const fadeInMediumDelay: Variants = {
       duration: 0.5,
       ease: 'easeIn',
     },
+    pointerEvents: 'auto',
   },
 };
 
 export const fadeInLargeDelay: Variants = {
-  initial: { opacity: 0 },
+  initial: { opacity: 0, pointerEvents: 'none' },
   animate: {
     opacity: 1,
     transition: {
@@ -32,5 +34,6 @@ export const fadeInLargeDelay: Variants = {
       duration: 0.5,
       ease: 'easeIn',
     },
+    pointerEvents: 'auto',
   },
 };

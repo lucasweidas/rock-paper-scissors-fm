@@ -3,17 +3,23 @@ import rulesImg from '@/public/images/image-rules.svg';
 
 export default function Rules({ onToggle }: { onToggle: () => void }) {
   return (
-    <div className="fixed bg-white w-screen min-h-screen inset-0 flex flex-col items-center pt-24 px-4 pb-16">
-      <h2 className="mb-28 text-2xl uppercase font-bold text-gray-700">
-        Rules
-      </h2>
-      <div className="mb-20">
-        <Image
-          src={rulesImg}
-          alt="Paper beats rock. Rock beats scissors. Scissors beats paper."
-        />
+    <div className="fixed w-screen min-h-screen inset-0 isolate lg:flex lg:items-center lg:justify-center">
+      <div className="bg-white w-full h-full flex flex-col items-center pt-24 px-4 pb-16 lg:w-[25rem] lg:h-[26rem] lg:rounded-lg lg:p-8 relative z-10 overflow-y-scroll">
+        <h2 className="mb-28 text-2xl uppercase font-bold text-gray-700 lg:mb-12 lg:self-start lg:text-3xl lg:leading-none">
+          Rules
+        </h2>
+        <div className="mb-20 lg:mb-0">
+          <Image
+            src={rulesImg}
+            alt="Paper beats rock. Rock beats scissors. Scissors beats paper."
+          />
+        </div>
+        <CloseButton onToggle={onToggle} />
       </div>
-      <CloseButton onToggle={onToggle} />
+      <div
+        className="absolute bg-black/50 inset-0 max-lg:hidden"
+        onClick={onToggle}
+      />
     </div>
   );
 }
@@ -21,7 +27,7 @@ export default function Rules({ onToggle }: { onToggle: () => void }) {
 function CloseButton({ onToggle }: { onToggle: () => void }) {
   return (
     <button
-      className="mt-auto opacity-25 hover:opacity-75 focus-visible:opacity-75 transition-opacity"
+      className="mt-auto opacity-25 hover:opacity-75 focus-visible:opacity-75 transition-opacity lg:absolute lg:mt-0 top-9 right-8"
       aria-label="close rules"
       onClick={onToggle}
     >

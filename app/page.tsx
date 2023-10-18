@@ -38,11 +38,11 @@ export default function Home() {
   }
 
   return (
-    <main className="overflow-x-hidden">
+    <main className="overflow-hidden">
       <h1 className="sr-only">
         Choose one of the options below to start playing.
       </h1>
-      <div className="px-7 pt-8 md:pt-12 pb-14 md:pb-8 min-h-screen flex flex-col">
+      <div className="px-7 pt-8 md:pt-12 pb-14 md:pb-8 min-h-screen flex flex-col max-w-[88rem] mx-auto">
         <TopBar score={score} />
         <div className="mt-24 w-full">
           <AnimatePresence initial={false}>
@@ -74,6 +74,7 @@ function TopBar({ score }: { score: number }) {
           alt="Rock, Paper, Scissors"
           fill
           className="object-cover"
+          priority
         />
       </div>
       <div className="min-w-20 h-[4.5rem] md:min-w-[9.5rem] md:h-28 p-3 md:px-4 flex items-center justify-center flex-col bg-white rounded-lg">

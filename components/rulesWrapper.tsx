@@ -12,7 +12,7 @@ export default function RulesWrapper() {
   }, []);
 
   return (
-    <div className="mt-auto">
+    <div className="mt-auto lg:self-end">
       <OpenButton onToggle={toggleRules} />
       {isOpen && <Rules onToggle={toggleRules} />}
     </div>

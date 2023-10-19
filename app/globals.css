@@ -5,3 +5,17 @@
 .no-scroll {
   overflow-y: hidden;
 }
+
+@layer components {
+  .fade-in {
+    @apply opacity-0 pointer-events-none animate-[fade-in_500ms_ease-in_forwards];
+  }
+
+  .fade-in--delay-md {
+    @apply opacity-0 pointer-events-none animate-[fade-in_500ms_ease-in_1000ms_forwards];
+  }
+
+  .fade-in--delay-lg {
+    @apply opacity-0 pointer-events-none animate-[fade-in_500ms_ease-in_1800ms_forwards];
+  }
+}

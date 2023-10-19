@@ -47,6 +47,22 @@ const config: Config = {
       screens: {
         xs: '375px',
       },
+      animation: {
+        split: 'split 500ms linear 1500ms forwards',
+      },
+      keyframes: {
+        split: {
+          to: {
+            width: '100%',
+          },
+        },
+        'fade-in': {
+          to: {
+            opacity: '1',
+            pointerEvents: 'auto',
+          },
+        },
+      },
     },
   },
   plugins: [],

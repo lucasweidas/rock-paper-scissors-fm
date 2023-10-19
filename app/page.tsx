@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import Playing from '@/components/playing';
 import Picking from '@/components/picking';
@@ -45,19 +44,17 @@ export default function Home() {
       <div className="px-7 pt-8 md:pt-12 pb-14 md:pb-8 min-h-screen flex flex-col max-w-[88rem] mx-auto">
         <TopBar score={score} />
         <div className="mt-24 w-full">
-          <AnimatePresence initial={false}>
-            {playerPick ? (
-              <Playing
-                playerPick={playerPick}
-                housePick={housePick!}
-                result={result!}
-                onPlayAgain={handlePlayAgain}
-                updateScore={handleScoreChange}
-              />
-            ) : (
-              <Picking onPick={handlePlayerPick} />
-            )}
-          </AnimatePresence>
+          {playerPick ? (
+            <Playing
+              playerPick={playerPick}
+              housePick={housePick!}
+              result={result!}
+              onPlayAgain={handlePlayAgain}
+              updateScore={handleScoreChange}
+            />
+          ) : (
+            <Picking onPick={handlePlayerPick} />
+          )}
         </div>
         <RulesWrapper />
       </div>

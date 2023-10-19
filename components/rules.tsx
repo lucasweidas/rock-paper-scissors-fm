@@ -4,7 +4,7 @@ import rulesImg from '@/public/images/image-rules.svg';
 export default function Rules({ onToggle }: { onToggle: () => void }) {
   return (
     <div className="fixed w-screen min-h-screen inset-0 isolate lg:flex lg:items-center lg:justify-center">
-      <div className="bg-white w-full h-full flex flex-col items-center pt-24 px-4 pb-16 lg:w-[25rem] lg:h-[26rem] lg:rounded-lg lg:p-8 relative z-10 overflow-y-scroll">
+      <div className="bg-white w-full h-full flex flex-col items-center pt-24 px-4 pb-16 lg:w-[25rem] lg:h-[26rem] lg:rounded-lg lg:p-8 relative z-10 overflow-y-auto">
         <h2 className="mb-28 text-2xl uppercase font-bold text-gray-700 lg:mb-12 lg:self-start lg:text-3xl lg:leading-none">
           Rules
         </h2>

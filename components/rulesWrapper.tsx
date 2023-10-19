@@ -22,7 +22,7 @@ export default function RulesWrapper() {
 function OpenButton({ onToggle }: { onToggle: () => void }) {
   return (
     <button
-      className="uppercase font-semibold border-[2px] border-white rounded-lg h-11 w-32 text-white tracking-widest mx-auto flex justify-center items-center mt-12 hover:text-gray-700 hover:bg-white focus-visible:text-gray-700 focus-visible:bg-white transition-colors"
+      className="uppercase font-semibold border-[2px] border-white rounded-lg h-11 w-32 text-white tracking-widest mx-auto flex justify-center items-center mt-12 hover:text-gray-700 hover:bg-white focus-visible:text-gray-700 focus-visible:bg-white transition-colors relative"
       onClick={onToggle}
     >
       Rules

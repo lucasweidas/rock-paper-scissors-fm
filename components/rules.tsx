@@ -4,21 +4,21 @@ import rulesImg from '@/public/images/image-rules.svg';
 export default function Rules({ onToggle }: { onToggle: () => void }) {
   return (
     <div
-      className="fixed inset-0 isolate min-h-screen w-screen lg:flex lg:items-center lg:justify-center"
+      className="fixed inset-0 isolate min-h-screen w-screen md:flex md:items-center md:justify-center"
       aria-modal="true"
     >
-      <div className="relative z-10 flex h-full w-full flex-col items-center overflow-y-auto bg-white px-4 pb-16 pt-24 lg:h-[26rem] lg:w-[25rem] lg:rounded-lg lg:p-8">
-        <h2 className="mb-28 text-2xl font-bold uppercase text-gray-700 lg:mb-12 lg:self-start lg:text-3xl lg:leading-none">
+      <div className="relative z-10 flex h-full w-full flex-col items-center overflow-y-auto bg-white px-4 pb-16 pt-24 md:h-[26rem] md:w-[25rem] md:rounded-lg md:p-8">
+        <h2 className="mb-28 text-2xl font-bold uppercase text-gray-700 md:mb-12 md:self-start md:text-3xl md:leading-none">
           Rules
         </h2>
-        <div className="mb-20 lg:mb-0">
+        <div className="mb-20 md:mb-0">
           <Image
             src={rulesImg}
             alt="Paper beats rock. Rock beats scissors. Scissors beats paper."
           />
         </div>
         <button
-          className="right-8 top-9 mt-auto opacity-25 transition-opacity hover:opacity-75 focus-visible:opacity-75 lg:absolute lg:mt-0"
+          className="right-8 top-9 mt-auto opacity-25 transition-opacity hover:opacity-75 focus-visible:opacity-75 md:absolute md:mt-0"
           aria-label="close rules"
           onClick={onToggle}
           aria-pressed="true"
@@ -38,7 +38,7 @@ export default function Rules({ onToggle }: { onToggle: () => void }) {
         </button>
       </div>
       <div
-        className="absolute inset-0 bg-black/50 max-lg:hidden"
+        className="absolute inset-0 bg-black/50 max-md:hidden"
         onClick={onToggle}
         aria-hidden="true"
       />

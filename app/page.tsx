@@ -1,11 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Playing from '@/components/playing';
 import Picking from '@/components/picking';
 import RulesWrapper from '@/components/rulesWrapper';
-import { getRandomPick, getResult } from '@/utils';
+import { getRandomPick, getResult, setLocalScore } from '@/utils';
 import type { Picks, Result } from '@/types';
 
 import logo from '@/public/images/logo.svg';
@@ -25,11 +25,16 @@ export default function Home() {
 
   const onChangeScore = useCallback(
     (result: Result) => {
+      let nextScore = score;
+
       if (result === 'win') {
-        setScore(score + 1);
+        nextScore++;
       } else if (result === 'lose' && score > 0) {
-        setScore(score - 1);
+        nextScore--;
       }
+
+      setScore(nextScore);
+      setLocalScore(nextScore);
     },
     [score],
   );
@@ -37,6 +42,13 @@ export default function Home() {
   const onPlayAgain = useCallback(() => {
     setPlayerPick(null);
     setHousePick(null);
+  }, []);
+
+  useEffect(() => {
+    const localScore = +(localStorage.getItem('score') ?? 0);
+
+    setLocalScore(localScore);
+    setScore(localScore);
   }, []);
 
   return (

@@ -62,3 +62,7 @@ export function getResult(playerPick: Picks, housePick: Picks): Result {
 
   return 'draw';
 }
+
+export function setLocalScore(score: number) {
+  localStorage.setItem('score', JSON.stringify(score));
+}

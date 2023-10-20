@@ -69,8 +69,8 @@ function TopBar({ score }: { score: number }) {
         <Image
           src={logo}
           alt="Rock, Paper, Scissors"
-          fill
           className="object-cover"
+          fill
           priority
         />
       </div>

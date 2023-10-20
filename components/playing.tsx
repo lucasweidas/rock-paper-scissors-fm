@@ -35,8 +35,9 @@ export default function Playing({
               <PickButton label={playerPick} disabled className="md:p-8" />
             </div>
           </div>
-          <span className="uppercase text-white font-semibold tracking-widest text-sm text-center xs:whitespace-nowrap md:text-2xl">
+          <span className="uppercase text-white font-semibold tracking-widest text-sm text-center xs:whitespace-nowrap md:text-2xl relative">
             You picked
+            <span className="sr-only">{playerPick}</span>
           </span>
         </div>
         <div className="w-[clamp(5rem,43%,8rem)] xs:w-32 md:w-[18rem] aspect-square flex flex-col items-center justify-center gap-6 md:flex-col-reverse md:gap-16">
@@ -50,8 +51,9 @@ export default function Playing({
               <PickButton label={housePick} disabled className="md:p-8" />
             </div>
           </div>
-          <span className="uppercase text-white font-semibold tracking-widest text-sm text-center xs:whitespace-nowrap md:text-2xl">
+          <span className="uppercase text-white font-semibold tracking-widest text-sm text-center xs:whitespace-nowrap md:text-2xl relative">
             The house picked
+            <span className="sr-only">{housePick}</span>
           </span>
         </div>
       </div>
@@ -77,6 +79,9 @@ export default function Playing({
 
 function WinnerBackground() {
   return (
-    <div className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-[clamp(12rem,80vw,18rem)] xs:w-72 md:w-[45.5rem] aspect-square rounded-full -z-[1] bg-radial-2 fade-in--delay-lg" />
+    <div
+      className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-[clamp(12rem,80vw,18rem)] xs:w-72 md:w-[45.5rem] aspect-square rounded-full -z-[1] bg-radial-2 fade-in--delay-lg"
+      aria-hidden="true"
+    />
   );
 }

@@ -1,5 +1,3 @@
-'use client';
-
 import { useCallback, useState } from 'react';
 import Rules from './rules';
 
@@ -14,7 +12,7 @@ export default function RulesWrapper() {
   return (
     <div className="mt-auto lg:self-end">
       <button
-        className="uppercase font-semibold border-[2px] border-white rounded-lg h-11 w-32 text-white tracking-widest mx-auto flex justify-center items-center mt-12 hover:text-gray-700 hover:bg-white focus-visible:text-gray-700 focus-visible:bg-white transition-colors relative"
+        className="relative mx-auto mt-12 flex h-11 w-32 items-center justify-center rounded-lg border-[2px] border-white font-semibold uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-gray-700 focus-visible:bg-white focus-visible:text-gray-700"
         onClick={toggleRules}
         aria-pressed={isOpen}
         aria-haspopup="dialog"

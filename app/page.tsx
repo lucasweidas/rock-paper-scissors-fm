@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Playing from '@/components/playing';
 import Picking from '@/components/picking';
 import RulesWrapper from '@/components/rulesWrapper';
@@ -16,32 +16,35 @@ export default function Home() {
   const [housePick, setHousePick] = useState<Picks | null>(null);
   const result = playerPick ? getResult(playerPick, housePick!) : null;
 
-  function handlePlayerPick(pick: Picks) {
+  const onPlayerPick = useCallback((pick: Picks) => {
     const housePick = getRandomPick();
 
     setPlayerPick(pick);
     setHousePick(housePick);
-  }
+  }, []);
 
-  function handleScoreChange(result: Result) {
-    if (result === 'win') {
-      setScore(score + 1);
-    } else if (result === 'lose' && score > 0) {
-      setScore(score - 1);
-    }
-  }
+  const onChangeScore = useCallback(
+    (result: Result) => {
+      if (result === 'win') {
+        setScore(score + 1);
+      } else if (result === 'lose' && score > 0) {
+        setScore(score - 1);
+      }
+    },
+    [score],
+  );
 
-  function handlePlayAgain() {
+  const onPlayAgain = useCallback(() => {
     setPlayerPick(null);
     setHousePick(null);
-  }
+  }, []);
 
   return (
     <main className="overflow-hidden">
       <h1 className="sr-only">
         Choose one of the options below to start playing.
       </h1>
-      <div className="px-7 pt-8 md:pt-12 pb-14 md:pb-8 min-h-screen flex flex-col max-w-[88rem] mx-auto">
+      <div className="mx-auto flex min-h-screen max-w-[88rem] flex-col px-7 pb-14 pt-8 md:pb-8 md:pt-12">
         <TopBar score={score} />
         <div className="mt-24 w-full">
           {playerPick ? (
@@ -49,11 +52,11 @@ export default function Home() {
               playerPick={playerPick}
               housePick={housePick!}
               result={result!}
-              onPlayAgain={handlePlayAgain}
-              updateScore={handleScoreChange}
+              onPlayAgain={onPlayAgain}
+              updateScore={onChangeScore}
             />
           ) : (
-            <Picking onPick={handlePlayerPick} />
+            <Picking onPick={onPlayerPick} />
           )}
         </div>
         <RulesWrapper />
@@ -64,8 +67,8 @@ export default function Home() {
 
 function TopBar({ score }: { score: number }) {
   return (
-    <div className="flex gap-4 justify-between items-center py-3 pl-5 pr-3 md:py-4 md:pl-8 md:pr-6 rounded-lg shadow-[0_0_2px_2px_hsl(217,16%,45%),inset_0_0_2px_2px_hsl(217,16%,45%)] max-w-md mx-auto w-full md:max-w-[44rem]">
-      <div className="w-[82px] h-[51px] md:w-[162px] md:h-[99px] relative flex-shrink-0">
+    <div className="mx-auto flex w-full max-w-md items-center justify-between gap-4 rounded-lg py-3 pl-5 pr-3 shadow-[0_0_2px_2px_hsl(217,16%,45%),inset_0_0_2px_2px_hsl(217,16%,45%)] md:max-w-[44rem] md:py-4 md:pl-8 md:pr-6">
+      <div className="relative h-[51px] w-[82px] flex-shrink-0 md:h-[99px] md:w-[162px]">
         <Image
           src={logo}
           alt="Rock, Paper, Scissors"
@@ -74,11 +77,11 @@ function TopBar({ score }: { score: number }) {
           priority
         />
       </div>
-      <div className="min-w-20 h-[4.5rem] md:min-w-[9.5rem] md:h-28 p-3 md:px-4 flex items-center justify-center flex-col bg-white rounded-lg">
-        <h2 className="text-blue-500 font-semibold uppercase text-xs tracking-widest md:text-base !leading-none">
+      <div className="min-w-20 flex h-[4.5rem] flex-col items-center justify-center rounded-lg bg-white p-3 md:h-28 md:min-w-[9.5rem] md:px-4">
+        <h2 className="text-xs font-semibold uppercase !leading-none tracking-widest text-blue-500 md:text-base">
           Score
         </h2>
-        <span className="text-gray-700 text-[2rem] !leading-none font-bold uppercase md:text-6xl">
+        <span className="text-[2rem] font-bold uppercase !leading-none text-gray-700 md:text-6xl">
           {score}
         </span>
       </div>

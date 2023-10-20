@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${barlowSemiCondensed.variable} font-barlowSemiCondensed bg-radial-1 bg-no-repeat w-full min-h-screen`}
+        className={`${barlowSemiCondensed.variable} min-h-screen w-full bg-radial-1 bg-no-repeat font-sans`}
       >
         {children}
       </body>

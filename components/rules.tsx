@@ -4,11 +4,11 @@ import rulesImg from '@/public/images/image-rules.svg';
 export default function Rules({ onToggle }: { onToggle: () => void }) {
   return (
     <div
-      className="fixed w-screen min-h-screen inset-0 isolate lg:flex lg:items-center lg:justify-center"
+      className="fixed inset-0 isolate min-h-screen w-screen lg:flex lg:items-center lg:justify-center"
       aria-modal="true"
     >
-      <div className="bg-white w-full h-full flex flex-col items-center pt-24 px-4 pb-16 lg:w-[25rem] lg:h-[26rem] lg:rounded-lg lg:p-8 relative z-10 overflow-y-auto">
-        <h2 className="mb-28 text-2xl uppercase font-bold text-gray-700 lg:mb-12 lg:self-start lg:text-3xl lg:leading-none">
+      <div className="relative z-10 flex h-full w-full flex-col items-center overflow-y-auto bg-white px-4 pb-16 pt-24 lg:h-[26rem] lg:w-[25rem] lg:rounded-lg lg:p-8">
+        <h2 className="mb-28 text-2xl font-bold uppercase text-gray-700 lg:mb-12 lg:self-start lg:text-3xl lg:leading-none">
           Rules
         </h2>
         <div className="mb-20 lg:mb-0">
@@ -18,7 +18,7 @@ export default function Rules({ onToggle }: { onToggle: () => void }) {
           />
         </div>
         <button
-          className="mt-auto opacity-25 hover:opacity-75 focus-visible:opacity-75 transition-opacity lg:absolute lg:mt-0 top-9 right-8"
+          className="right-8 top-9 mt-auto opacity-25 transition-opacity hover:opacity-75 focus-visible:opacity-75 lg:absolute lg:mt-0"
           aria-label="close rules"
           onClick={onToggle}
           aria-pressed="true"
@@ -38,7 +38,7 @@ export default function Rules({ onToggle }: { onToggle: () => void }) {
         </button>
       </div>
       <div
-        className="absolute bg-black/50 inset-0 max-lg:hidden"
+        className="absolute inset-0 bg-black/50 max-lg:hidden"
         onClick={onToggle}
         aria-hidden="true"
       />

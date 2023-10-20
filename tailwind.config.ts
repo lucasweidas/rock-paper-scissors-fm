@@ -11,10 +11,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        barlowSemiCondensed: [
-          'var(--font-barlow-semi-condensed)',
-          ...fontFamily.sans,
-        ],
+        sans: ['var(--font-barlow-semi-condensed)', ...fontFamily.sans],
       },
       colors: {
         gray: {
